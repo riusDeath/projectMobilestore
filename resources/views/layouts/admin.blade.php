@@ -11,6 +11,7 @@
     <!-- Morris -->
     <link href="{{asset('public/css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('public/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('public/css/font-awesome.min.css')}}">
     <script type="text/javascript" src="{{asset('public/ckeditor/ckeditor.js')}}"></script>
 </head>
 
@@ -71,13 +72,6 @@
                     </ul>
                 </li> 
                 <li>
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Quản lý Slider</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{route('danh-sach-slide')}}">Danh sách Slider</a></li>
-                        <li><a href="{{route('them-moi-slide')}}">Thêm mới Slider</a></li>
-                    </ul>
-                </li>
-                <li>
                     <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Quản lý đơn hàng</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{route('don-hang')}}">Danh sách đơn hàng</a></li>
@@ -96,6 +90,13 @@
                         <li><a href="{{route('them-moi-admin')}}">Thêm mới tài khoản</a></li>
                     </ul>
                 </li> 
+                <li>
+                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Quản lý Slider</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{route('danh-sach-slide')}}">Danh sách Slider</a></li>
+                        <li><a href="{{route('them-moi-slide')}}">Thêm mới Slider</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="#">
                         <i class="fa fa-globe"></i> 

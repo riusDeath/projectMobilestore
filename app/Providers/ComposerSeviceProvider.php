@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Slide;
 use App\Models\Product;
 use App\Models\Log;
+use App\Models\User;
 
 class ComposerSeviceProvider extends ServiceProvider
 {
@@ -25,7 +26,8 @@ class ComposerSeviceProvider extends ServiceProvider
             $orders_day = Order::whereDate('created_at',date('Y-m-d'))->get();
             $orders_status = Order::where('status','<>',2)->get();
             $logs = Log::select('object')->groupBy('object')->get();
-            view()->share(compact('orders_day','orders_status'));
+            $users = User::all();
+            view()->share(compact('orders_day', 'orders_status', 'users'));
         // });
        
         view()->composer('*', function($view){

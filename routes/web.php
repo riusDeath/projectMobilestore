@@ -6,7 +6,7 @@ Route::get('demo',function(){
 
 });
 
-Route::group(['namespace' => 'home', 'prefix' => 'home'], function(){
+Route::group(['namespace' => 'home', 'prefix' => '/'], function(){
 	Route::get('/', 'HomeController@index')->name('home');
 	Route::post('/', 'HomeController@index')->name('home');
 
@@ -21,6 +21,7 @@ Route::group(['namespace' => 'home', 'prefix' => 'home'], function(){
 		Route::get('san-pham-danh-muc/{category_id}', 'ProductController@product_category')->name('san-pham-danh-muc');
 		Route::get('san-pham-thuong-hieu/{category_id}', 'ProductController@product_brand')->name('san-pham-thuong-hieu');
 		Route::post('san-pham-theo-gia', 'ProductController@product_price')->name('san-pham-theo-gia');
+		Route::get('san-pham-theo-gia', 'ProductController@product_price')->name('san-pham-theo-gia');
 		// Route::post('san-pham-theo-rate', 'ProductController@product_start')->name('san-pham-theo-rate');
 		Route::get('san-pham-theo-rate', 'ProductController@product_start')->name('san-pham-theo-rate');
 		Route::get('sap-xep-san-pham/{sort}', 'ProductController@sort')->name('sap-xep-san-pham');
@@ -29,11 +30,15 @@ Route::group(['namespace' => 'home', 'prefix' => 'home'], function(){
 	Route::group(['prefix' => 'tai-khoan'], function(){
 		Route::get('dang-ky', 'HomeController@sign_up')->name('dang-ky');
 		Route::get('dang-nhap', 'HomeController@login')->name('dang-nhap');
+		Route::post('dang-nhap', 'HomeController@sign')->name('dang-nhap');
+		Route::get('quen-mat-khau', 'HomeController@resetPassword')->name('quen-mat-khau');
+		Route::post('quen-mat-khau', 'HomeController@updatePassword')->name('quen-mat-khau');
 		Route::get('dang-xuat-user', 'HomeController@logout')->name('dang-xuat-user');
 	});
 
 	Route::group(['prefix' => 'reviews'], function(){
 		Route::post('add-comment/{id}', 'ProductController@addComment')->name('add-comment')->middleware('auth');
+		Route::get('add-comment/{id}', 'ProductController@addComment')->name('add-comment')->middleware('auth');
 		Route::get('add-rate/{id}', 'ProductController@addRate')->name('add-rate')->middleware('auth');
 		Route::get('add-rate/{id}', 'ProductController@addRate')->name('add-rate')->middleware('auth');
 	});
@@ -69,7 +74,7 @@ Route::group([ 'namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'adm
 	
 	Route::group(['prefix' => 'danh-muc'], function(){
 		Route::get('/', 'CategoryController@index')->name('danh-muc');
-		// Route::get('them-danh-muc', 'CategoryController@add')->name('them-danh-muc');
+		Route::get('them-danh-muc', 'CategoryController@add')->name('them-danh-muc');
 		Route::post('them-danh-muc', 'CategoryController@create')->name('them-danh-muc');
 		Route::get('sua-danh-muc/{id}', 'CategoryController@edit')->name('sua-danh-muc');
 		Route::post('sua-danh-muc/{id}', 'CategoryController@update')->name('sua-danh-muc');
@@ -155,4 +160,4 @@ Route::group([ 'namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'adm
 
 Auth::routes();
 
-Route::get('/home',  'HomeController@index')->name('home');
+Route::get('/',  'HomeController@index')->name('home');

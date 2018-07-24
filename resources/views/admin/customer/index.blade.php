@@ -54,10 +54,12 @@
                 <td>
                     <a href="{{route('sua-ho-so',['id' => $cus->id])}}">Sửa hồ sơ</a>
                     <a href="{{route('lich-su-mua-hang',[ 'id'=> $cus->id ])}}" class="label label-info">Lịch sử mua hàng</a>
+                    @if($cus->grade == 'customer' || Auth::user()->grade == 'boss')
                     @if($cus->status==1)
                      <a href="{{route('xoa-khach-hang',['id' => $cus->id])}}" class="label label-danger" onclick="confirm('Bạn muốn xóa quyền truy cập khách hàng {{$cus->name}}?')">Xóa quyền truy cập</a>
                     @else
                      <a href="{{route('xoa-khach-hang',['id' => $cus->id])}}" class="label label-danger" onclick="confirm('Bạn muốn cấp quyền truy cập {{$cus->name}}?')">Cấp quyền truy cập</a>
+                    @endif
                     @endif
                                       
                 </td>

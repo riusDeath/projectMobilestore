@@ -64,20 +64,21 @@
                             <div class="rated-star" style="width:{{($product->rate_avg1()!=0)?($product->rate_avg1()/5*100):0}}%;">&nbsp;
                             </div>
                         </div>
-                    </div>
-                    <p class="rating-links"> 
-                        <a href="#">{{$product->rate_avg1()}}/5 starts</a> <span class="separator">|</span> <a href="#">Đánh giá</a> 
+                    </div>                  
+                    <p class="availability in-stock pull-right">Tình trạng: 
+                        <span>{{ ($product->total>=1)?'Còn '.$product->total.' sản phẩm':'Hết hàng' }}</span>
                     </p>
-                    <p class="availability in-stock pull-right">Tình trạng: <span>{{ ($product->total>=1)?'Còn '.$product->total.' sản phẩm':'Hết hàng' }}</span></p>
                 </div>
                 <div class="short-description">
                     <h2>Thông tin sơ lược</h2>
                     <p>                   
                     <?php echo $product->description; ?> 
                     </p>
-                    <p>
+                    <h4>Thời gian bảo hành</h4>
+                    <p>{{$product->warranty_period->time}} {{$product->warranty_period->type}}</p>
+                    <h4>
                     Thông số kỹ thuật: 
-                    </p>                
+                    </h4>                
                 </div>
                     <form action="{{route('them-gio-hang',['id' => $product->id])}}" method="post">
                     @foreach($types as $type)
@@ -100,7 +101,8 @@
                     </div>
                     @endforeach
                     <div class="product-variation">                
-                    <input type="hidden" value="{{csrf_token()}}" name="_token">                  
+                    <input type="hidden" value="{{csrf_token()}}" name="_token">  
+                    @if($product->total >0)                
                     <div class="cart-plus-minus">
                         <label for="qty">Số lượng: </label>
                         <div class="numbers-row">
@@ -116,6 +118,7 @@
                     <button class="button pro-add-to-cart" title="Add to Cart" type="submit">
                         <span><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</span>
                     </button>
+                    @endif
                     </form>
                 </div>
                 <div class="product-cart-option">
@@ -155,7 +158,7 @@
                     @endif
                     <div class="review-ratting">
                     <div class="rating">
-                        <h1 class="ajax_rate_avg">{{$product->rate_avg1()}} <i class="fa fa-star"></i></h1> 
+                        <h1 class="ajax_rate_avg">{{(float)$product->rate_avg1()}} <i class="fa fa-star"></i></h1> 
                     </div>
                     <p><a href="#">Tuyệt vời</a></p>
                     <table>
@@ -292,14 +295,25 @@
                     <form id="" action="{{route('add-comment',['id' => $product->id])}}" method="post">
                         <div class="form-add-tags">
                             <div class="input-box">
-                                <label for="productTagName">Comment: </label>
+                                <label for="productTagName"> </label>
+                               
                                 <input type="hidden" value="{{csrf_token()}}" name="_token">
-                                <textarea placeholder="Đặt câu hỏi tại đây (tối thiểu 10 ký tự)" rows="5" maxlength="300" type="text" height="100%" data-id="{{$product->id}}" name="comment" style="border-radius: 20px"></textarea>
+                                <h4>Viết bình luận....</h4>
+                                @if(isset($user_login))
+                                <div class="form-group">
+                                    <textarea placeholder="Đặt câu hỏi tại đây (tối thiểu 10 ký tự)" rows="5" maxlength="300" type="text" height="100%" data-id="{{$product->id}}" name="comment" style="border-radius: 20px" class="form-control"></textarea>
+                                </div>
                                 <input type="hidden" value="{{$product->id}}" name="product_id">
-                                 @if(isset($user_login))
+                                
                                 <input type="hidden" value="{{$user_login->id}}" name="user_id">
                                 @endif
+                                @if(Auth::check())
                                 <button type="submit" class="next-btn next-btn-primary next-btn-medium qna-ask-btn" class="btn_comment">Comment</button>
+                                @else
+                                <a href="{{route('dang-nhap')}}">
+                                Bạn cần đăng nhập để tương tác nhiểu hơn!                               
+                                </a>
+                                @endif
                             </div>
                         </div>
                         <div>
@@ -309,7 +323,22 @@
                             Câu hỏi của bạn không được chứa thông tin liên hệ như email, điện thoại hoặc liên kết web bên ngoài. 
                             </div>
                         </div>
+                       
                     </form>
+                     <div class="show-comment">
+                        <h3>Bảng bình luận</h3>
+                             @foreach($product->comment as $comment)
+                            <div class="media">
+                                <a class="pull-left" href="#">
+                                    <img src="https://www.gravatar.com/avatar/{{ md5($comment->user->email)}}?s=30" class="user-image" alt="User Image">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{$comment->user->name}}</h4>
+                                    <p>{{$comment->comment}}</p>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
                     </div>
                 </div>
@@ -331,7 +360,7 @@
 <div class="col-xs-12">
 <div class="related-product-area">       
     <div class="page-header">
-        <h2>Sản phẩm loại {{$product->category->name}}</h2>
+        <h2>Sản phẩm cùng loại {{$product->category->name}}</h2>
         </div>
         <div class="related-products-pro">
                 <div class="slider-items-products">
@@ -453,7 +482,7 @@
 <div class="row">
 <div class="col-xs-12">         
 <div class="page-header">
-    <h2>Sản phẩm hãng {{$product->brand->name}}</h2>
+    <h2>Sản phẩm cùng hãng {{$product->brand->name}}</h2>
 </div>
 <div class="slider-items-products">
     <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
@@ -572,7 +601,6 @@
         e.preventDefault();
         var href = $(this).attr('href');
         var rate = $("input[name*='rate']:checked").val();
-        alert(href);
         $.ajax({
           url: href,
           type:"GET",

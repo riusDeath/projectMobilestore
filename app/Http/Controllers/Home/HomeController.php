@@ -22,7 +22,7 @@ class HomeController extends Controller
     function index()
     {
         $slides = Slide::where('name', 'product');
-    	$products = Product::search()->orderBy('id', 'desc')->paginate(3);   
+    	$products = Product::search()->orderBy('id', 'desc')->paginate(12);   
          	
     	return view('display.index',compact('products', 'slides'));
     }
@@ -37,12 +37,46 @@ class HomeController extends Controller
         return view('auth.login');
     }
 
-     public function logout()
+    public function sign()
+    {
+        return redirect()->back();
+    }
+
+    public function resetPassword()
+    {
+        return view('auth.passwords.reset');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $this->validate( $request, [
+            'password' => 'min:6|max:32',
+            'password_confirmation' => 'same:password',
+        ], [
+            'password_confirmation.same' => 'Mật khẩu nhập lại không khớp',
+            'password.min' => 'Mậ khẩu ít nhất 6 ký tự',
+            'password.max' => 'Mậ khẩu nhiều nhất 6 ký tự',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (count($user) ==1 ) {
+           $user->password = bcrypt($request->password);
+            $user->save();
+            return view('auth.login');
+        } else {
+            return redirect('tai-khoan/quen-mat-khau')->with('thongbao','Không tồn tại tài khoản cỏ email '.$request->email);
+        }
+        
+
+    }
+
+    public function logout()
     {
         Auth::logout();
         Cart::destroy();
 
-        return redirect('home');
+        return redirect('/');
     }
 
     public function cart(Request $request, $id)
@@ -69,7 +103,7 @@ class HomeController extends Controller
 
             return redirect()->route('xem-don-hang'); 
         } else {
-            return redirect('home');
+            return redirect('/');
         }
         
 
@@ -85,7 +119,7 @@ class HomeController extends Controller
     {
         Cart::remove($rowId);
 
-        return redirect()->route('xem-don-hang'); 
+        return redirect()->back(); 
     }
 
     public function checkout()

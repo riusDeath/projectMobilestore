@@ -35,27 +35,28 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <span class="label label-primary pull-right">Today</span>
-                        <h5>visits</h5>
+                        <span class="label label-primary pull-right"></span>
+                        <h5>Người dùng</h5>
                     </div>
                     <div class="ibox-content">
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h1 class="no-margins">406,42</h1>
-                                <div class="font-bold text-navy">44% <i class="fa fa-level-up"></i> <small>Rapid pace</small></div>
+                        <a href="{{route('khach-hang')}}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h1 class="no-margins">{{count($users)}}</h1>
+                                    <div class="font-bold text-navy">Người dùng <i class="fa fa-level-up"></i> </div>
+                                </div>
+                               <!--  <div class="col-md-6">
+                                    <h1 class="no-margins">206,12</h1>
+                                    <div class="font-bold text-navy">22% <i class="fa fa-level-up"></i> <small>Slow pace</small></div>
+                                </div> -->
                             </div>
-                            <div class="col-md-6">
-                                <h1 class="no-margins">206,12</h1>
-                                <div class="font-bold text-navy">22% <i class="fa fa-level-up"></i> <small>Slow pace</small></div>
-                            </div>
-                        </div>
-
+                        </a>
 
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Monthly income</h5>
@@ -70,9 +71,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
         </div>
-        <div class="row">
+     <!--    <div class="row">
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
@@ -131,8 +132,8 @@
                     </div>
                 </div>
             </div>   
-        </div>
-        <div class="row">
+        </div> -->
+        <!-- <div class="row">
         <div class="col-lg-12">
         <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -154,5 +155,5 @@
                     <i class="fa fa-times"></i>
                 </a>
             </div>
-        </div> 
+        </div>  -->
 @endsection

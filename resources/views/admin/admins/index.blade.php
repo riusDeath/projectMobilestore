@@ -49,10 +49,12 @@
                 <td>{{$admin->created_at}}</td>
                 <td>    
                     <a href="{{route('sua-thong-tin-admin',[ 'id'=> $admin->id ])}}" class="label label-info">Sửa</a>
-                    @if($admin->status==1)
+                    @if(Auth::user()->grade == 'boss' && $admin->id != Auth::user()->id )
+                    @if($admin->status==1  )
                      <a href="{{route('xoa-quyen-admin',['id' => $admin->id])}}" class="label label-danger" onclick="confirm('Bạn muốn xóa quyền truy cập admin {{$admin->name}}?')">Xóa quyền truy cập</a>
                     @else
                      <a href="{{route('xoa-khach-hang',['id' => $admin->id])}}" class="label label-danger" onclick="confirm('Bạn muốn cấp quyền truy cập {{$admin->name}}?')">Cấp quyền truy cập</a>
+                    @endif                                    
                     @endif                                    
                 </td>
             </tr>

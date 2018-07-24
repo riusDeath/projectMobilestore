@@ -13,7 +13,11 @@ class UserController extends Controller
     public function getDangNhapAdmin()
 	{
 		if (Auth::check()) {
-			return redirect()->route('admin');
+			if (Auth::user()->grade == "admin" || Auth::user()->grade == "boss" && Auth::user()->status == 1) {
+				return redirect()->route('admin');
+			} else {
+				return view('login.index');
+			}
 		} else {
 			return view('login.index');
 		}

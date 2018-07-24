@@ -3,7 +3,7 @@
 <div class="panel panel-default">
 
     <!-- Default panel contents -->
-    <div class="panel-heading">Thêm mới danh mục</div>
+    <div class="panel-heading">sửa Slide</div>
   <div>
     
     @if(isset($thongbao))

@@ -22,7 +22,7 @@ use App\Http\Requests\ProductAtributeRequest;
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {        
+    {      
         if (isset($request->sort) && $request->sort !=0) {
             if ($request->sort == 1) {
                 $products = Product::where('total', 0)->paginate(12)->appends('sort', $request->sort);
@@ -53,6 +53,7 @@ class ProductController extends Controller
         if ($request->hasFile('link')) {
             $file = $request->file('link');
             $filename = $file->getClientOriginalName('link');
+            $duoi = $file->getClientOriginalExtension();            
             $file->move('uploads', $filename);
         }
        

@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="wrapper wrapper-content animated fadeInRight ecommerce">
-		<div class="col-md-9">
+		<div class="">
 		<div class="" style="padding:10px">
 		<div class="row">
 			<h3> {{$product->name}}</h3>
@@ -19,7 +19,7 @@
 			<p>Số lượng : {{$product->total}} cái</p>
 			<p>Giá gốc: {{number_format($product['price'])}} VNĐ</p>
 			<p>Giá sale: {{number_format($product['price_sale'])}} VNĐ</p>
-			<p>Số sản phẩm đã bán: </p>	
+			<p>Độ yêu thích trung bình: {{$product->avg_rate}} /5 starts</p>	
 			<a href="{{route('sua-san-pham',['id' => $product->id])}}" class="btn btn-success">Sửa thông tin</a>									
 			</div>
 			<p>
@@ -29,7 +29,8 @@
             </p>
         </p>
         <div class="clearfix"></div>
-        @if(count($product->comment) !=0)        
+        @if(count($product->comment) !=0) 
+        <hr>       
         <h3>Bảng Comment</h3>
         <table class="table">
         <thead>
@@ -61,7 +62,8 @@
         </tbody>
         </table>
         @endif
-        @if(count($product->rate) !=0)      
+        @if(count($product->rate) !=0)  
+        <hr>    
         <h3> Bảng Rate</h3>
             <table class="table">
         <thead>

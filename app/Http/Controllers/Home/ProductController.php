@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     public function sort($sort, Request $request)
     {
-        $products = Product::select()->where('status','1')->orderBy('price',$request->sort)->paginate(12)->appends('sort', $sort);
+        $products = Product::select()->where('status','1')->orderBy('price',$request->sort)->get();
 
         return response()->json(compact('products'));
     }
@@ -88,7 +88,7 @@ class ProductController extends Controller
     public function product_price(Request $request)
     {
         $slides = Slide::where('name', 'product')->get();
-        $products = Product::where('status', '1')->where('price', '>=', $request->value_min )->where('price', '<=', $request->value_max )->paginate(12)->appends(['value_min' => $request->value_min, 'value_max'=> $request->value_max]);
+        $products = Product::productPrice()->where('status', '1')->paginate(12)->appends(['value_min' => $request->value_min, 'value_max'=> $request->value_max]);
 
         return view('display.index',compact('products', 'slides'));
     
@@ -121,7 +121,7 @@ class ProductController extends Controller
         ]);
         Comment::create($request->all()); 
 
-        return redirect('home/san-pham/chi-tiet-san-pham/'.$id);
+        return redirect('san-pham/chi-tiet-san-pham/'.$id)->with('thongbao', 'Thêm bình luận thành công');
     }
 
     public function addRate(Request $request, $id)
